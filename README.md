@@ -5,7 +5,9 @@ Action chaining and history for agents
 <img src="resources/image.jpg">
 
 # Why Use This?
-This package helps manage and simplify the task of handling actions for an agent, especially a looping agent with chained functions. It facilitates action creation, retrieval, and management, all while supporting vector search powered by chromadb to efficiently locate relevant actions.
+This package helps manage and simplify the task of handling actions for an agent, especially a looping agent with chained functions. Actions can be anything, but the intended purpose is to work with openai function calling or other JSON/function calling LLM completion paradigms.
+
+This package facilitates action creation, retrieval, and management, all while supporting vector search powered by chromadb to efficiently locate relevant actions.
 
 # Installation
 
