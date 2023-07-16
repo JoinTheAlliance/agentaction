@@ -17,10 +17,6 @@ pip install agentaction
 
 # Quickstart
 
-This section provides a brief guide on how to start using the Agent Actions Manager.
-
-### Setting Up the Actions Directory
-
 Create a directory for your action modules:
 
 ```bash
@@ -50,8 +46,6 @@ def get_actions():
         }
     ]
 ```
-
-### Import and Use Actions in Your Agent
 
 Now you can use the action manager in your agent. Here's a simple example:
 
