@@ -21,7 +21,7 @@ setup(
     author_email="shawmakesmagic@gmail.com",
     license="MIT",
     packages=["actionflow"],
-    install_requires=["pynput"],
+    install_requires=["agentmemory"],
     readme="README.md",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
