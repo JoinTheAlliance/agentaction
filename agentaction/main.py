@@ -1,6 +1,7 @@
 import os
 import importlib
 import json
+import sys
 
 from agentmemory import (
     create_memory,
@@ -227,12 +228,13 @@ def import_actions(actions_dir):
     """
 
     actions_dir = os.path.abspath(actions_dir)
-    # get the name of the directory
-    dir_name = os.path.basename(actions_dir)
+    print("actiond_dir", actions_dir)
+    sys.path.insert(0, actions_dir)
 
     for filename in os.listdir(actions_dir):
         if filename.endswith(".py"):
-            module = importlib.import_module(f"{dir_name}.{filename[:-3]}")
+            module_name = filename[:-3]  # filename without .py
+            module = importlib.import_module(module_name)
 
             if hasattr(module, "get_actions"):
                 action_funcs = module.get_actions()
@@ -240,6 +242,8 @@ def import_actions(actions_dir):
                 for i in range(len(action_funcs)):
                     name = action_funcs[i]["function"]["name"]
                     add_action(name, action_funcs[i])
+    # Remove the added path after done with imports
+    sys.path.remove(actions_dir)
 
 
 def clear_actions():
