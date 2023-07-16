@@ -20,16 +20,18 @@ def compose_action_prompt(action, values):
 
     Args:
         action: Dict representing an action.
-            This action contains a 'prompt' and 'compose' key
-        values: A dictionary of values to insert into the prompt.
+            This action contains a 'prompt' and 'builder' key
+            The prompt is a string template
+            The builder is a function which injects data into the template
+        values: A dictionary of values to insert into the prompt
 
     Returns:
         A string representing the composed prompt.
     """
     prompt = action["prompt"]
-    composer = action["composer"]
-    if composer is not None:
-        prompt = composer(values)
+    builder = action["builder"]
+    if builder is not None:
+        prompt = builder(values)
     return prompt
 
 
@@ -53,6 +55,9 @@ def add_to_action_history(action_name, action_arguments={}, success=True):
         action_arguments: A dictionary of arguments used to execute the action.
         success: A boolean indicating whether the action was successful or not.
     """
+    # if success is a boolean, convet to a string
+    if isinstance(success, bool):
+        success = str(success)
     action_arguments["success"] = success
     create_memory("action_history", action_name, action_arguments)
 

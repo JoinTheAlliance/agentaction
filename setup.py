@@ -11,16 +11,16 @@ with open("README.md", "r") as fh:
 
 
 setup(
-    name="actionflow",
+    name="agentaction",
     version="0.1.0",
     description="Action chaining and history for agents",
     long_description=readme,  # added this line
     long_description_content_type="text/markdown",  # and this line
-    url="https://github.com/AutonomousResearchGroup/actionflow",
+    url="https://github.com/AutonomousResearchGroup/agentaction",
     author="Moon",
     author_email="shawmakesmagic@gmail.com",
     license="MIT",
-    packages=["actionflow"],
+    packages=["agentaction"],
     install_requires=["agentmemory"],
     readme="README.md",
     classifiers=[
