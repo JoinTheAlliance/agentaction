@@ -36,7 +36,7 @@ def get_actions():
     return [
         {
             "prompt": "Say hello",
-            "composer": None,
+            "builder": None,
             "handler": sample_function,
             "suggestion_after_actions": [],
             "never_after_actions": [],
@@ -75,8 +75,8 @@ from actions_manager import add_action
 
 action = {
     "prompt": "Action Prompt",
-    "composer": None,
-    "handler": your_function_name,
+    "builder": None, # the function that is called to build the action prompt
+    "handler": your_function_name, # the function that is called when the action is executed
     "suggestion_after_actions": ["other_action_name1", "other_action_name2"],
     "never_after_actions": ["action_name3", "action_name4"],
     "function": {
