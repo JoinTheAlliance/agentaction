@@ -17,6 +17,8 @@ from agentaction import (
 )
 from agentmemory import wipe_all_memories
 
+from agentaction.main import get_formatted_actions
+
 
 def setup_test_action():
     return {
@@ -227,5 +229,51 @@ def test_get_actions():
     # Verify that the actions have been added
     assert "test1" in actions
     assert "test2" in actions
+
+    cleanup()  # Cleanup after the test
+
+def test_get_formatted_actions_normal():
+    cleanup()  # Ensure clean state before test
+
+    # Add some actions
+    test_action = setup_test_action()
+    add_action("test1", test_action)
+    add_action("test2", test_action)
+    add_action("test3", test_action)
+
+    result = get_formatted_actions("test")
+
+    # Verify that the actions have been included in the available actions
+    action_names = [action['metadata']['name'] for action in result['available_actions']]
+    assert 'test1' in action_names
+    assert 'test2' in action_names
+    assert 'test3' in action_names
+
+    # Verify that the formatted actions includes the action names
+    assert 'test1' in result['formatted_actions']
+    assert 'test2' in result['formatted_actions']
+    assert 'test3' in result['formatted_actions']
+
+    # Verify that the short actions includes the action names
+    assert 'test1' in result['short_actions']
+    assert 'test2' in result['short_actions']
+    assert 'test3' in result['short_actions']
+
+    cleanup()  # Cleanup after the test
+
+
+def test_get_formatted_actions_no_actions():
+    cleanup()  # Ensure clean state before test
+
+    result = get_formatted_actions("test")
+
+    # There should be no available actions
+    assert len(result['available_actions']) == 0
+
+    # The formatted actions should only include the header text
+    assert result['formatted_actions'].strip() == "Available actions for me to choose from:"
+
+    # The short actions should also indicate no actions available
+    assert result['short_actions'].strip() == "Available actions (name):"
 
     cleanup()  # Cleanup after the test

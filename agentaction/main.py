@@ -94,31 +94,35 @@ def get_last_action():
     return last
 
 
-def get_available_actions(search_text, n_results=5, chain=True):
+def get_available_actions(search_text, n_results=5):
     available_actions = search_actions(search_text=search_text, n_results=n_results)
-
-    if chain is False:
-        return available_actions
-    
     recommended_actions = []
     ignored_actions = []
-    
+
     last_action = get_last_action()
     if last_action is not None:
         recommended_actions = actions[last_action]["suggestion_after_actions"]
-        ignored_actions = actions[last_action]["never_after_actions"]
-        # check if available_actions contains recommended actions, if not, add them
+        # get actions from named list
+        recommended_action_objects = []
         for action in recommended_actions:
+            recommended_action_objects.append(get_action_from_memory(action))
+        ignored_actions = actions[last_action]["never_after_actions"]
+        ignored_action_objects = []
+        for action in ignored_actions:
+            ignored_action_objects.append(get_action_from_memory(action))
+        # check if available_actions contains recommended actions, if not, add them
+        for action in recommended_action_objects:
             if action not in available_actions:
-                action["metadata"]["recommended"] = True
+                print("action")
+                print(action)
+                action["recommended"] = True
                 available_actions.append(action)
-    merged_actions = []
-    for action in available_actions:
-        if action["id"] in ignored_actions:
-            continue
-        merged_actions.append(action)
+        # for each action in ignored, delete from available
+        for action in ignored_action_objects:
+            if action in available_actions:
+                available_actions.remove(action)
 
-    return merged_actions
+    return available_actions
 
 
 def search_actions(search_text, n_results=5):
@@ -253,3 +257,50 @@ def clear_actions():
     wipe_category("actions")
     global actions
     actions = {}
+
+
+def get_formatted_actions(search_text):
+    """
+    Retrieve a formatted string of the available actions based on search text
+
+    Args:
+        search_text: Find most revelant actions whith are available.
+
+    Returns:
+        A string representing the available actions.
+    """
+    # check if context['summary'] exists
+    header_text = "Available actions for me to choose from:"
+    available_actions = get_available_actions(search_text, n_results=5)
+
+    # sort available_actions so that recommended are first
+    # recommended are action["metadata"].get("recommended", None)
+    available_actions = sorted(
+        available_actions,
+        key=lambda x: x.get("recommended", None) is True,
+        reverse=True,
+    )
+
+    def create_formatted_actions(actions):
+        formatted_actions = []
+        for action in actions:
+            if action.get("recommended", None) is True:
+                formatted_actions.append(f"(recommended) {action['document']}")
+            else:
+                formatted_actions.append(action["document"])
+        # join the actions with a newline
+        return "\n".join(formatted_actions)
+
+    short_actions = "Available actions (name): " + ", ".join(
+        [k["metadata"]["name"] for k in available_actions]
+    )
+
+    formatted_actions = (
+        header_text + "\n" + create_formatted_actions(available_actions) + "\n"
+    )
+
+    return {
+        "available_actions": available_actions,
+        "formatted_actions": formatted_actions,
+        "short_actions": short_actions,
+    }
