@@ -94,32 +94,29 @@ def get_last_action():
     return last
 
 
-def get_available_actions(search_text):
-    """
-    Retrieves the available actions based on relevance and last action.
+def get_available_actions(search_text, n_results=5, chain=True):
+    available_actions = search_actions(search_text=search_text, n_results=n_results)
 
-    Args:
-        search_text: Text to search for most relevant actions by.
-
-    Returns:
-        A list of strings representing the available actions.
-    """
-    available_actions = search_actions(search_text=search_text, n_results=10)
+    if chain is False:
+        return available_actions
+    
     recommended_actions = []
     ignored_actions = []
-
+    
     last_action = get_last_action()
     if last_action is not None:
         recommended_actions = actions[last_action]["suggestion_after_actions"]
         ignored_actions = actions[last_action]["never_after_actions"]
+        # check if available_actions contains recommended actions, if not, add them
+        for action in recommended_actions:
+            if action not in available_actions:
+                action["metadata"]["recommended"] = True
+                available_actions.append(action)
     merged_actions = []
     for action in available_actions:
-        if action["id"] in recommended_actions:
-            merged_actions.append(f"(recommended) {action['document']}")
-        elif action["id"] in ignored_actions:
+        if action["id"] in ignored_actions:
             continue
-        else:
-            merged_actions.append(action["document"])
+        merged_actions.append(action)
 
     return merged_actions
 
