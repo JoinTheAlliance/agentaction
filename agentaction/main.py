@@ -113,8 +113,6 @@ def get_available_actions(search_text, n_results=5):
         # check if available_actions contains recommended actions, if not, add them
         for action in recommended_action_objects:
             if action not in available_actions:
-                print("action")
-                print(action)
                 action["recommended"] = True
                 available_actions.append(action)
         # for each action in ignored, delete from available
@@ -123,6 +121,7 @@ def get_available_actions(search_text, n_results=5):
                 available_actions.remove(action)
 
     return available_actions
+
 
 def get_action_from_memory(action_name):
     """
@@ -244,7 +243,6 @@ def import_actions(actions_dir):
     """
 
     actions_dir = os.path.abspath(actions_dir)
-    print("actiond_dir", actions_dir)
     sys.path.insert(0, actions_dir)
 
     for filename in os.listdir(actions_dir):
@@ -288,7 +286,6 @@ def get_formatted_actions(search_text):
         "short_actions": a list of actions names as a string, comma separated
     }
     """
-    # check if context['summary'] exists
     header_text = "Available actions for me to choose from:"
     available_actions = get_available_actions(search_text, n_results=5)
 

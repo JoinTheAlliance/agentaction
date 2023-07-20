@@ -113,14 +113,16 @@ def test_get_available_actions():
     assert len(available_actions) > 0  # Should be at least one action
     cleanup()  # Cleanup after the test
 
+
 def get_get_action_from_memory():
     cleanup()  # Ensure clean state before test
     test_action = setup_test_action()
     add_action("test", test_action)
-    
+
     memory = get_action_from_memory("test")
     assert memory is not None
     cleanup()  # Cleanup after the test
+
 
 # Define a directory for testing import_actions
 TEST_DIR = "test_actions_dir"
@@ -241,6 +243,7 @@ def test_get_actions():
 
     cleanup()  # Cleanup after the test
 
+
 def test_get_formatted_actions_normal():
     cleanup()  # Ensure clean state before test
 
@@ -253,20 +256,22 @@ def test_get_formatted_actions_normal():
     result = get_formatted_actions("test")
 
     # Verify that the actions have been included in the available actions
-    action_names = [action['metadata']['name'] for action in result['available_actions']]
-    assert 'test1' in action_names
-    assert 'test2' in action_names
-    assert 'test3' in action_names
+    action_names = [
+        action["metadata"]["name"] for action in result["available_actions"]
+    ]
+    assert "test1" in action_names
+    assert "test2" in action_names
+    assert "test3" in action_names
 
     # Verify that the formatted actions includes the action names
-    assert 'test1' in result['formatted_actions']
-    assert 'test2' in result['formatted_actions']
-    assert 'test3' in result['formatted_actions']
+    assert "test1" in result["formatted_actions"]
+    assert "test2" in result["formatted_actions"]
+    assert "test3" in result["formatted_actions"]
 
     # Verify that the short actions includes the action names
-    assert 'test1' in result['short_actions']
-    assert 'test2' in result['short_actions']
-    assert 'test3' in result['short_actions']
+    assert "test1" in result["short_actions"]
+    assert "test2" in result["short_actions"]
+    assert "test3" in result["short_actions"]
 
     cleanup()  # Cleanup after the test
 
@@ -277,12 +282,15 @@ def test_get_formatted_actions_no_actions():
     result = get_formatted_actions("test")
 
     # There should be no available actions
-    assert len(result['available_actions']) == 0
+    assert len(result["available_actions"]) == 0
 
     # The formatted actions should only include the header text
-    assert result['formatted_actions'].strip() == "Available actions for me to choose from:"
+    assert (
+        result["formatted_actions"].strip()
+        == "Available actions for me to choose from:"
+    )
 
     # The short actions should also indicate no actions available
-    assert result['short_actions'].strip() == "Available actions (name):"
+    assert result["short_actions"].strip() == "Available actions (name):"
 
     cleanup()  # Cleanup after the test
