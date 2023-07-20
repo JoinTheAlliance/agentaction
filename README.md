@@ -119,6 +119,9 @@ Retrieves the last executed action from the action history.
 ### `get_available_actions(search_text: str) -> list`
 Retrieves the available actions based on relevance and last action.
 
+### `get_formatted_actions(search_text: str) -> list`
+Retrieve a dict containing the available actions in several formats
+
 ### `search_actions(search_text: str, n_results: int=5) -> list`
 Searches for actions based on a query text.
 

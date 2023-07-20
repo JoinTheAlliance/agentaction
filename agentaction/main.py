@@ -261,13 +261,17 @@ def clear_actions():
 
 def get_formatted_actions(search_text):
     """
-    Retrieve a formatted string of the available actions based on search text
+    Retrieve a dict containing the available actions in several formats
 
     Args:
         search_text: Find most revelant actions whith are available.
 
     Returns:
-        A string representing the available actions.
+        {
+        "available_actions": a list of available actions in memory format
+        "formatted_actions": a list of actions as a string
+        "short_actions": a list of actions names as a string, comma separated
+    }
     """
     # check if context['summary'] exists
     header_text = "Available actions for me to choose from:"
