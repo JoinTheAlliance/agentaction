@@ -124,6 +124,21 @@ def get_available_actions(search_text, n_results=5):
 
     return available_actions
 
+def get_action_from_memory(action_name):
+    """
+    Retrieve an action from memory based on the action's name.
+
+    Args:
+        action_name: The name of the action to retrieve.
+
+    Returns:
+        A dictionary representing the action.
+    """
+    action = get_memories("actions", filter_metadata={"name": action_name}, n_results=1)
+    if len(action) == 0:
+        return None
+    return action[0]
+
 
 def search_actions(search_text, n_results=5):
     """

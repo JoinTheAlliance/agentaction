@@ -6,6 +6,7 @@ from agentaction import (
     get_action_history,
     get_last_action,
     get_available_actions,
+    get_action_from_memory,
     search_actions,
     use_action,
     add_action,
@@ -112,6 +113,14 @@ def test_get_available_actions():
     assert len(available_actions) > 0  # Should be at least one action
     cleanup()  # Cleanup after the test
 
+def get_get_action_from_memory():
+    cleanup()  # Ensure clean state before test
+    test_action = setup_test_action()
+    add_action("test", test_action)
+    
+    memory = get_action_from_memory("test")
+    assert memory is not None
+    cleanup()  # Cleanup after the test
 
 # Define a directory for testing import_actions
 TEST_DIR = "test_actions_dir"
