@@ -122,6 +122,8 @@ Retrieves the available actions based on relevance and last action.
 ### `get_formatted_actions(search_text: str) -> list`
 Retrieve a dict containing the available actions in several formats
 
+### `get_action_from_memory(action_name) -> dict or None`
+Retrieve an action from memory based on the action's name.
 ### `search_actions(search_text: str, n_results: int=5) -> list`
 Searches for actions based on a query text.
 
