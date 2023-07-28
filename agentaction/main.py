@@ -30,7 +30,7 @@ def compose_action_prompt(action, values):
         A string representing the composed prompt.
     """
     prompt = action["prompt"]
-    builder = action["builder"]
+    builder = action.get("builder", None)
     if builder is not None:
         prompt = builder(values)
     return prompt
