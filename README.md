@@ -4,6 +4,9 @@ Action chaining and history for agents
 
 <img src="resources/image.jpg">
 
+[![Lint and Test](https://github.com/AutonomousResearchGroup/agentaction/actions/workflows/test.yml/badge.svg)](https://github.com/AutonomousResearchGroup/agentaction/actions/workflows/test.yml)
+[![PyPI version](https://badge.fury.io/py/agentaction.svg)](https://badge.fury.io/py/agentaction)
+
 # Why Use This?
 This package helps manage and simplify the task of handling actions for an agent, especially a looping agent with chained functions. Actions can be anything, but the intended purpose is to work with openai function calling or other JSON/function calling LLM completion paradigms.
 
