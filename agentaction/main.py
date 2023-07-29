@@ -11,6 +11,8 @@ from agentmemory import (
     wipe_category,
 )
 
+from agentlogger import log
+
 # Create an empty dictionary to hold the actions
 actions = {}
 
@@ -172,12 +174,11 @@ def use_action(function_name, arguments):
     """
     if function_name not in actions:
         add_to_action_history(function_name, arguments, success=False)
-        return {"success": False, "response": "Action not found"}
+        log("Warning: action was hallucinated: " + function_name, type="warning")
+        return {"success": False, "output": None, "error": "Action not found"}
 
     add_to_action_history(function_name, arguments)
-    result = actions[function_name]["handler"](arguments)
-
-    return {"success": True, "result": result}
+    return actions[function_name]["handler"](arguments)
 
 
 def add_action(name, action):
