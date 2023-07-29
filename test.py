@@ -39,7 +39,7 @@ def setup_test_action():
         },
         "suggestion_after_actions": [],
         "never_after_actions": [],
-        "handler": lambda args: args["input"],
+        "handler": lambda args: { "success": True, "output": args["input"] },
     }
 
 
@@ -80,7 +80,9 @@ def test_add_and_use_action():
     add_action("test", test_action)
     assert get_action("test") is not None  # Action should now exist
     result = use_action("test", {"input": "test"})
-    assert result["success"] and result["result"] == "test"
+    print('result is')
+    print(result)
+    assert result["success"] and result["output"] == "test"
     cleanup()  # Cleanup after the test
 
 
