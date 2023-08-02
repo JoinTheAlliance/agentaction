@@ -170,7 +170,7 @@ def use_action(function_name, arguments):
     Returns:
     dict: Contains the "success" key
             True if the action was found and executed, otherwise False.
-            If the action was found and executed, also contains "result" key
+            If the action was found and executed, also contains "output" key
     """
     if function_name not in actions:
         add_to_action_history(function_name, arguments, success=False)

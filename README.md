@@ -61,7 +61,7 @@ import_actions("./actions")
 # Use an action
 result = use_action("sample_function", {"name": "John"})
 actions = search_actions("hello")
-print(result)  # Should print: {"success": True, "result": "Hello, John"}
+print(result)  # Should print: {"success": True, "output": "Hello, John"}
 ```
 
 You can use the `get_available_actions` and `get_action` functions to search for and retrieve actions, respectively. And, don't forget to use the `add_to_action_history` function to keep track of which actions your agent has performed.
