@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="agentaction",
-    version="0.1.6",
+    version="0.1.7",
     description="Action chaining and history for agents",
     long_description=readme,  # added this line
     long_description_content_type="text/markdown",  # and this line
